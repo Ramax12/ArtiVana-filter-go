@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-func parseInt64(value string) (int64, error) {
-	parsed, err := strconv.ParseInt(value, 10, 64)
+func parseint(value string) (int, error) {
+	parsed, err := strconv.Atoi(value)
 	if err != nil {
 		return 0, fmt.Errorf("invalid integer %q: %w", value, err)
 	}
@@ -16,8 +16,8 @@ func parseInt64(value string) (int64, error) {
 	return parsed, nil
 }
 
-func parseCharacteristics(query url.Values) (map[string][]int64, error) {
-	characteristics := make(map[string][]int64)
+func parseCharacteristics(query url.Values) (map[string][]int, error) {
+	characteristics := make(map[string][]int)
 
 	const prefix = "characteristics["
 
@@ -37,7 +37,7 @@ func parseCharacteristics(query url.Values) (map[string][]int64, error) {
 		}
 
 		for _, value := range values {
-			id, err := parseInt64(value)
+			id, err := parseint(value)
 			if err != nil {
 				return nil, fmt.Errorf(
 					"characteristic %s: %w",
@@ -66,7 +66,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	var err error
 
 	for _, value := range query["brands"] {
-		id, err := parseInt64(value)
+		id, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("brands: %w", err)
 		}
@@ -75,14 +75,14 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	}
 
 	if value := query.Get("subcategory"); value != "" {
-		filter.Subcategory, err = parseInt64(value)
+		filter.Subcategory, err = parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("subcategory: %w", err)
 		}
 	}
 
 	if value := query.Get("subsubcategory"); value != "" {
-		subsubcategory, err := parseInt64(value)
+		subsubcategory, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("subsubcategory: %w", err)
 		}
@@ -90,7 +90,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	}
 
 	for _, value := range query["subsubcategories"] {
-		id, err := parseInt64(value)
+		id, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("subsubcategories: %w", err)
 		}
@@ -99,7 +99,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	}
 
 	if value := query.Get("min_price"); value != "" {
-		minPrice, err := parseInt64(value)
+		minPrice, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("min_price: %w", err)
 		}
@@ -108,7 +108,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	}
 
 	if value := query.Get("max_price"); value != "" {
-		maxPrice, err := parseInt64(value)
+		maxPrice, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("max_price: %w", err)
 		}
@@ -117,7 +117,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	}
 
 	if value := query.Get("rating"); value != "" {
-		rating, err := parseInt64(value)
+		rating, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("rating: %w", err)
 		}
@@ -131,7 +131,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	}
 
 	if value := query.Get("page"); value != "" {
-		page, err := parseInt64(value)
+		page, err := parseint(value)
 		if err != nil {
 			return filter, fmt.Errorf("page: %w", err)
 		}
@@ -142,7 +142,7 @@ func parseCreateFilter(query url.Values) (CreateFilter, error) {
 	return filter, nil
 }
 
-func findFacetCount(facets []FacetCount, id int64) int64 {
+func findFacetCount(facets []FacetCount, id int) int {
 	for _, facet := range facets {
 		if facet.ID == id {
 			return facet.Count

@@ -18,17 +18,17 @@ import (
 type facetRow struct {
 	Kind  string
 	Key   string
-	ID    int64
-	Count int64
+	ID    int
+	Count int
 }
 
 type Repository interface {
 	FindAll(ctx context.Context) ([]productModel.Product, error)
 	FindFiltered(ctx context.Context, filter CreateFilter) ([]productModel.Product, error)
-	FindUsedSubsubcategories(ctx context.Context, subcategoryID int64) ([]categories.Subsubcategory, error)
-	FindUsedBrands(ctx context.Context, subcategoryID int64, subsubcategoryID *int64) ([]dictionaries.ProductOption, error)
-	FindUsedCharsGeneral(ctx context.Context, subcategoryID int64, subsubcategoryID *int64) ([]dictionaries.ProductOptionChars, error)
-	FindUsedCharsGeneralOptionIDs(ctx context.Context, subcategoryID int64, subsubcategoryID *int64) (map[string]map[int64]struct{}, error)
+	FindUsedSubsubcategories(ctx context.Context, subcategoryID int) ([]categories.Subsubcategory, error)
+	FindUsedBrands(ctx context.Context, subcategoryID int, subsubcategoryID *int) ([]dictionaries.ProductOption, error)
+	FindUsedCharsGeneral(ctx context.Context, subcategoryID int, subsubcategoryID *int) ([]dictionaries.ProductOptionChars, error)
+	FindUsedCharsGeneralOptionIDs(ctx context.Context, subcategoryID int, subsubcategoryID *int) (map[string]map[int]struct{}, error)
 	GetFilterFacets(ctx context.Context, filter CreateFilter) (FilterFacets, error)
 }
 
@@ -148,7 +148,7 @@ func (r *repository) FindFiltered(ctx context.Context, filter CreateFilter) ([]p
 	}
 
 	const perPage = 24
-	var page int64 = 1
+	var page int = 1
 	if filter.Page != nil {
 		page = *filter.Page
 	}
@@ -169,7 +169,7 @@ func (r *repository) FindFiltered(ctx context.Context, filter CreateFilter) ([]p
 	return scanProducts(rows)
 }
 
-func (r *repository) FindUsedSubsubcategories(ctx context.Context, subcategoryID int64) ([]categories.Subsubcategory, error) {
+func (r *repository) FindUsedSubsubcategories(ctx context.Context, subcategoryID int) ([]categories.Subsubcategory, error) {
 	query := `
 		SELECT DISTINCT
 			s.id,
@@ -219,8 +219,8 @@ func (r *repository) FindUsedSubsubcategories(ctx context.Context, subcategoryID
 
 func (r *repository) FindUsedBrands(
 	ctx context.Context,
-	subcategoryID int64,
-	subsubcategoryID *int64,
+	subcategoryID int,
+	subsubcategoryID *int,
 ) ([]dictionaries.ProductOption, error) {
 	query := `
 		SELECT DISTINCT
@@ -270,8 +270,8 @@ func (r *repository) FindUsedBrands(
 
 func (r *repository) FindUsedCharsGeneral(
 	ctx context.Context,
-	subcategoryID int64,
-	subsubcategoryID *int64,
+	subcategoryID int,
+	subsubcategoryID *int,
 ) ([]dictionaries.ProductOptionChars, error) {
 	query := `
 		SELECT DISTINCT
@@ -327,9 +327,9 @@ func (r *repository) FindUsedCharsGeneral(
 
 func (r *repository) FindUsedCharsGeneralOptionIDs(
 	ctx context.Context,
-	subcategoryID int64,
-	subsubcategoryID *int64,
-) (map[string]map[int64]struct{}, error) {
+	subcategoryID int,
+	subsubcategoryID *int,
+) (map[string]map[int]struct{}, error) {
 	query := `
 		SELECT DISTINCT
 			j.key,
@@ -361,11 +361,11 @@ func (r *repository) FindUsedCharsGeneralOptionIDs(
 	}
 	defer rows.Close()
 
-	result := make(map[string]map[int64]struct{})
+	result := make(map[string]map[int]struct{})
 
 	for rows.Next() {
 		var key string
-		var optionID int64
+		var optionID int
 
 		if err := rows.Scan(&key, &optionID); err != nil {
 			return nil, fmt.Errorf(
@@ -377,7 +377,7 @@ func (r *repository) FindUsedCharsGeneralOptionIDs(
 		key = strings.TrimSuffix(key, "_id")
 
 		if result[key] == nil {
-			result[key] = make(map[int64]struct{})
+			result[key] = make(map[int]struct{})
 		}
 
 		result[key][optionID] = struct{}{}

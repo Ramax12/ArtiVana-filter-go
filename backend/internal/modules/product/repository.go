@@ -8,8 +8,8 @@ import (
 )
 
 type Repository interface {
-	GetByID(ctx context.Context, id int64) (*Product, error)
-	FindByGroupID(ctx context.Context, groupID int64, excludeID int64) ([]ProductByGroupID, error)
+	GetByID(ctx context.Context, id int) (*Product, error)
+	FindByGroupID(ctx context.Context, groupID int, excludeID int) ([]ProductByGroupID, error)
 }
 
 type repository struct {
@@ -24,7 +24,7 @@ func NewRepository(db *pgxpool.Pool) Repository {
 
 func (r *repository) GetByID(
 	ctx context.Context,
-	id int64,
+	id int,
 ) (*Product, error) {
 	var product Product
 	var shippingOptions []string
@@ -97,8 +97,8 @@ func (r *repository) GetByID(
 
 func (r *repository) FindByGroupID(
 	ctx context.Context,
-	groupID int64,
-	excludeID int64,
+	groupID int,
+	excludeID int,
 ) ([]ProductByGroupID, error) {
 	rows, err := r.db.Query(ctx, `
 		SELECT

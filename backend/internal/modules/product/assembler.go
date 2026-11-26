@@ -29,7 +29,7 @@ func (a *ProductAssembler) BuildBrand(product Product, brands []dictionaries.Pro
 func (a *ProductAssembler) BuildGroup(
 	groupsProduct []ProductByGroupID,
 	productBrand dictionaries.ProductOption,
-	id int64,
+	id int,
 ) []ProductsGroupItem {
 	productsGroup := make([]ProductsGroupItem, 0)
 
@@ -131,7 +131,7 @@ func (a *ProductAssembler) BuildCategory(
 }
 
 func (a *ProductAssembler) BuildCharacteristics(
-	productChars map[string]int64,
+	productChars map[string]int,
 	chars []dictionaries.ProductOptionChars,
 	charsOptions []dictionaries.ProductOptionCharsOption,
 ) []ProductCharacteristic {
@@ -144,7 +144,7 @@ func (a *ProductAssembler) BuildCharacteristics(
 	}
 
 	charsOptionsMap := make(
-		map[int64]dictionaries.ProductOptionCharsOption,
+		map[int]dictionaries.ProductOptionCharsOption,
 		len(charsOptions),
 	)
 	for _, option := range charsOptions {

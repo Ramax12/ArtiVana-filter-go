@@ -30,33 +30,33 @@ type ProductsGroupItem struct {
 }
 
 type ProductByGroupID struct {
-	ID      int64    `json:"id" example:"1"`
+	ID      int    `json:"id" example:"1"`
 	Slug    string   `json:"slug" example:"neewer-bi-color-660-led-video-light-142816"`
 	Name    string   `json:"name" example:"Neewer Bi-Color 660 LED Video Light"`
 	Model   *string  `json:"model" example:"K2-90" extensions:"x-nullable"`
 	Images  []string `json:"images" example:"/img/image1.jpg, /img/image2.jpg"`
-	GroupID int64    `json:"group_id" example:"1"`
+	GroupID int    `json:"group_id" example:"1"`
 }
 
 type Product struct {
-	ID               int64
+	ID               int
 	Slug             string
-	GroupID          *int64
+	GroupID          *int
 	CreatedAt        time.Time
-	CategoryID       int64
-	SubcategoryID    int64
-	SubsubcategoryID int64
+	CategoryID       int
+	SubcategoryID    int
+	SubsubcategoryID int
 	Name             string
-	Article          int64
-	BrandID          int64
+	Article          int
+	BrandID          int
 	Model            *string
-	OriginalPrice    *int64
-	FinalPrice       int64
-	Stock            int64
+	OriginalPrice    *int
+	FinalPrice       int
+	Stock            int
 	Images           []string
 	Rating           float64
-	CharsGeneral     map[string]int64
-	CharsExtra       *map[string]int64
+	CharsGeneral     map[string]int
+	CharsExtra       *map[string]int
 	Package          []string
 	Description      string
 	ShippingOptions  []DeliveryOption
@@ -64,36 +64,36 @@ type Product struct {
 }
 
 type ProductCutDown struct {
-	ID             int64                 `json:"id" example:"1"`
+	ID             int                 `json:"id" example:"1"`
 	Slug           string                `json:"slug" example:"neewer-bi-color-660-led-video-light-142816"`
 	Category       ProductOptionWithSlug `json:"category"`
 	Subcategory    ProductOptionWithSlug `json:"subcategory"`
 	Subsubcategory ProductOptionWithSlug `json:"subsubcategory"`
 	Name           string                `json:"name" example:"Neewer Bi-Color 660 LED Video Light"`
-	Article        int64                 `json:"article" example:"123456"`
-	OriginalPrice  *int64                `json:"original_price" example:"25000" extensions:"x-nullable"`
-	FinalPrice     int64                 `json:"final_price" example:"24000"`
-	Stock          int64                 `json:"stock" example:"50"`
+	Article        int                 `json:"article" example:"123456"`
+	OriginalPrice  *int                `json:"original_price" example:"25000" extensions:"x-nullable"`
+	FinalPrice     int                 `json:"final_price" example:"24000"`
+	Stock          int                 `json:"stock" example:"50"`
 	Images         []string              `json:"images" example:"/img/image1.jpg, /img/image2.jpg"`
 	Tags           []string              `json:"tags" example:"New Arrival, Best Seller" extensions:"x-nullable"`
 }
 
 type ProductResponse struct {
-	ID              int64                      `json:"id" example:"1"`
+	ID              int                      `json:"id" example:"1"`
 	Slug            string                     `json:"slug" example:"neewer-bi-color-660-led-video-light-142816"`
-	GroupID         *int64                     `json:"group_id" example:"1" extensions:"x-nullable"`
+	GroupID         *int                     `json:"group_id" example:"1" extensions:"x-nullable"`
 	ProductsGroup   []ProductsGroupItem        `json:"products_group" extension:"x-nullable"`
 	CreatedAt       time.Time                  `json:"created_at" example:"2025-10-11T14:30:00.000Z"`
 	Category        ProductOptionWithSlug      `json:"category"`
 	Subcategory     ProductOptionWithSlug      `json:"subcategory"`
 	Subsubcategory  ProductOptionWithSlug      `json:"subsubcategory"`
 	Name            string                     `json:"name" example:"Neewer Bi-Color 660 LED Video Light"`
-	Article         int64                      `json:"article" example:"123456"`
+	Article         int                      `json:"article" example:"123456"`
 	Brand           dictionaries.ProductOption `json:"brand"`
 	Model           *string                    `json:"model" example:"K2-90" extensions:"x-nullable"`
-	OriginalPrice   *int64                     `json:"original_price" example:"24000" extensions:"x-nullable"`
-	FinalPrice      int64                      `json:"final_price" example:"24000"`
-	Stock           int64                      `json:"stock" example:"50"`
+	OriginalPrice   *int                     `json:"original_price" example:"24000" extensions:"x-nullable"`
+	FinalPrice      int                      `json:"final_price" example:"24000"`
+	Stock           int                      `json:"stock" example:"50"`
 	Images          []string                   `json:"images" example:"/img/image1.jpg, /img/image2.jpg"`
 	Rating          float64                    `json:"rating" example:"4.8"`
 	CharsGeneral    []ProductCharacteristic    `json:"chars_general"`

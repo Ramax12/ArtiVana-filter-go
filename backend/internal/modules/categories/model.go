@@ -1,30 +1,30 @@
 package categories
 
 type Category struct {
-	ID    int64  `json:"id"`
+	ID    int  `json:"id"`
 	Slug  string `json:"slug"`
 	Name  string `json:"name"`
 	Image string `json:"image"`
 }
 
 type Subcategory struct {
-	ID         int64  `json:"id"`
+	ID         int  `json:"id"`
 	Slug       string `json:"slug"`
 	Name       string `json:"name"`
 	Image      string `json:"image"`
-	CategoryID int64  `json:"category_id"`
+	CategoryID int  `json:"category_id"`
 }
 
 type Subsubcategory struct {
-	ID            int64  `json:"id"`
+	ID            int  `json:"id"`
 	Slug          string `json:"slug"`
 	Name          string `json:"name"`
 	Image         string `json:"image"`
-	SubcategoryID int64  `json:"subcategory_id"`
+	SubcategoryID int  `json:"subcategory_id"`
 }
 
 type CategoryResponse struct {
-	ID            int64                 `json:"id" example:"1"`
+	ID            int                 `json:"id" example:"1"`
 	Slug          string                `json:"slug" example:"oil-paints"`
 	Name          string                `json:"name" example:"Oil Paints"`
 	Image         string                `json:"image" example:"/img/image.jpg"`
@@ -32,18 +32,18 @@ type CategoryResponse struct {
 }
 
 type SubcategoryResponse struct {
-	ID               int64                    `json:"id" example:"1"`
+	ID               int                    `json:"id" example:"1"`
 	Slug             string                   `json:"slug" example:"paints"`
 	Name             string                   `json:"name" example:"Paints"`
 	Image            string                   `json:"image" example:"/img/image.jpg"`
 	Subsubcategories []SubsubcategoryResponse `json:"subsubcategories"`
-	CategoryID       int64                    `json:"category_id" example:"1"`
+	CategoryID       int                    `json:"category_id" example:"1"`
 }
 
 type SubsubcategoryResponse struct {
-	ID            int64  `json:"id" example:"1"`
+	ID            int  `json:"id" example:"1"`
 	Slug          string `json:"slug" example:"art-supplies"`
 	Name          string `json:"name" example:"Art Supplies"`
 	Image         string `json:"image" example:"/img/image.jpg"`
-	SubcategoryID int64  `json:"subcategory_id" example:"1"`
+	SubcategoryID int  `json:"subcategory_id" example:"1"`
 }

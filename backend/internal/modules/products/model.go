@@ -6,7 +6,7 @@ import (
 
 type FilterDataItem struct {
 	dictionaries.ProductOption
-	Count int64 `json:"count" example:"25"`
+	Count int `json:"count" example:"25"`
 }
 
 type FilterDataItemCharacteristics struct {
@@ -15,12 +15,12 @@ type FilterDataItemCharacteristics struct {
 }
 
 type FilterDataPrice struct {
-	BaseRange [2]int64 `json:"base_range" example:"0,500"`
-	Range     [2]int64 `json:"range" example:"100,300"`
+	BaseRange [2]int `json:"base_range" example:"0,500"`
+	Range     [2]int `json:"range" example:"100,300"`
 }
 
 type FilterDataRating struct {
-	Count int64 `json:"count" example:"4"`
+	Count int `json:"count" example:"4"`
 }
 
 type FilterDataStandard struct {
@@ -36,35 +36,35 @@ type FilterData struct {
 }
 
 type FilterMeta struct {
-	Count   int64      `json:"count" example:"120"`
+	Count   int      `json:"count" example:"120"`
 	Filters FilterData `json:"filters"`
 }
 
 type CreateFilter struct {
-	Brands           []int64            `json:"brands,omitempty" example:"1, 2, 3"`
-	Subcategory      int64              `json:"subcategory" example:"5"`
-	Subsubcategory   *int64             `json:"subsubcategory,omitempty" example:"12"`
-	Subsubcategories []int64            `json:"subsubcategories,omitempty" example:"10, 11, 12"`
-	MinPrice         *int64             `json:"min_price,omitempty" example:"100"`
-	MaxPrice         *int64             `json:"max_price,omitempty" example:"500"`
-	Rating           *int64             `json:"rating,omitempty" example:"1"`
-	Characteristics  map[string][]int64 `json:"characteristics,omitempty"`
+	Brands           []int            `json:"brands,omitempty" example:"1, 2, 3"`
+	Subcategory      int              `json:"subcategory" example:"5"`
+	Subsubcategory   *int             `json:"subsubcategory,omitempty" example:"12"`
+	Subsubcategories []int            `json:"subsubcategories,omitempty" example:"10, 11, 12"`
+	MinPrice         *int             `json:"min_price,omitempty" example:"100"`
+	MaxPrice         *int             `json:"max_price,omitempty" example:"500"`
+	Rating           *int             `json:"rating,omitempty" example:"1"`
+	Characteristics  map[string][]int `json:"characteristics,omitempty"`
 	Sort             *string            `json:"sort,omitempty" example:"price_asc"`
-	Page             *int64             `json:"page,omitempty" example:"1"`
+	Page             *int             `json:"page,omitempty" example:"1"`
 }
 
 type FacetCount struct {
-	ID    int64
-	Count int64
+	ID    int
+	Count int
 }
 
 type FilterFacets struct {
-	Count            int64
-	BasePriceMin     int64
-	BasePriceMax     int64
-	PriceMin         int64
-	PriceMax         int64
-	RatingCount      int64
+	Count            int
+	BasePriceMin     int
+	BasePriceMax     int
+	PriceMin         int
+	PriceMax         int
+	RatingCount      int
 	Brands           []FacetCount
 	Subsubcategories []FacetCount
 	Characteristics  map[string][]FacetCount

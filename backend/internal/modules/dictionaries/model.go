@@ -1,7 +1,7 @@
 package dictionaries
 
 type ProductOption struct {
-	ID   int64  `json:"id" example:"1"`
+	ID   int  `json:"id" example:"1"`
 	Name string `json:"name" example:"Acrylic"`
 }
 
@@ -12,5 +12,5 @@ type ProductOptionChars struct {
 
 type ProductOptionCharsOption struct {
 	ProductOption
-	ParentID int64 `json:"parent_id" example:"1"`
+	ParentID int `json:"parent_id" example:"1"`
 }

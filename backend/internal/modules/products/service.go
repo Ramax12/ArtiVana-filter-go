@@ -33,9 +33,9 @@ func NewService(
 
 func (s *Service) GetProducts(
 	ctx context.Context,
-	ids []int64,
-	subcategoryID int64,
-	subsubcategoryID int64,
+	ids []int,
+	subcategoryID int,
+	subsubcategoryID int,
 ) (
 	[]productModel.ProductResponse,
 	error,
@@ -179,8 +179,8 @@ func (s *Service) buildFilterData() FilterData {
 			Subsubcategories: make([]FilterDataItem, 0),
 			Brands:           make([]FilterDataItem, 0),
 			Price: FilterDataPrice{
-				BaseRange: [2]int64{},
-				Range:     [2]int64{},
+				BaseRange: [2]int{},
+				Range:     [2]int{},
 			},
 			Rating: FilterDataRating{Count: 0},
 		},
@@ -304,11 +304,11 @@ func (s *Service) GetFilterMeta(ctx context.Context, filter CreateFilter) (Filte
 	}
 
 	filterData.Standard.Price = FilterDataPrice{
-		BaseRange: [2]int64{
+		BaseRange: [2]int{
 			facets.BasePriceMin,
 			facets.BasePriceMax,
 		},
-		Range: [2]int64{
+		Range: [2]int{
 			facets.PriceMin,
 			facets.PriceMax,
 		},
